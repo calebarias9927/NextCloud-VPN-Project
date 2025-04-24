@@ -1,0 +1,16 @@
+# Sensitive files
+*.key
+*.conf.private
+
+# Logs
+*.log
+
+# Backup files
+*~
+
+# NextCloud data
+nextcloud/data/
+
+# OS junk files
+.DS_Store
+Thumbs.db
