@@ -14,6 +14,18 @@ This project enables a private file-sharing and collaboration platform (NextClou
 - **Bridged Network Adapter** for LAN access
 - **GitHub** for source control & configuration backups
 
+## 📦 Project Structure
+NextCloud-VPN-Project/
+├── nextcloud-setup/ # NextCloud installation + web root files
+│ ├── apache/ # Apache config files
+│ └── nextcloud-www/ # Cloned NextCloud source
+├── wireguard-config/ # VPN configuration (wg0.conf, keys)
+├── firewall-rules/ # IPTables or UFW rules
+├── docs/ # Documentation or diagrams
+├── install_nextcloud.sh # Setup script to automate installation
+├── .gitignore
+└── README.md
+
 ## ✅ What We've Completed
 
 - [x] Installed and configured Apache, PHP, and MariaDB
@@ -37,3 +49,29 @@ SaveConfig = true
 
 PostUp = sysctl -w net.ipv4.ip_forward=1
 PostDown = sysctl -w net.ipv4.ip_forward=0
+
+
+---
+
+## 🔐 VPN Setup
+
+We use [WireGuard](https://www.wireguard.com/) to create a private, encrypted network between clients and the NextCloud server.
+
+- Server listens on port `51820`.
+- Clients are assigned IPs in the range `10.8.0.0/24`.
+- Each team member generates a public/private key pair and shares their **public key** to be added as a `[Peer]` in `wg0.conf`.
+
+---
+
+## ☁️ NextCloud Setup
+
+- Apache2 is configured to serve `nextcloud-www`.
+- NextCloud is only accessible within the VPN subnet.
+- HTTPS is enabled with a self-signed cert (or optionally Let's Encrypt).
+- All NextCloud data is excluded from version control via `.gitignore`.
+
+To install NextCloud on a new VM:
+
+```bash
+chmod +x install_nextcloud.sh
+./install_nextcloud.sh
