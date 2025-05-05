@@ -9,7 +9,7 @@
 *~
 
 # NextCloud data
-nextcloud/data/
+nextcloud-setup/nextcloud-www/data/
 
 # OS junk files
 .DS_Store
