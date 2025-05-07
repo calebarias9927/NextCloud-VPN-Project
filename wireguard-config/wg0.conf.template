@@ -1,0 +1,9 @@
+[Interface]
+Address = {{WG_SERVER_IP}}/24
+PrivateKey = {{WG_SERVER_PRIVATE_KEY}}
+ListenPort = {{WG_PORT}}
+
+PostUp = iptables -A FORWARD -i wg0 -j ACCEPT
+PostUp = iptables -t nat -A POSTROUTING -o {{SERVER_INTERFACE}} -j MASQUERADE
+PostDown = iptables -D FORWARD -i wg0 -j ACCEPT
+PostDown = iptables -t nat -D POSTROUTING -o {{SERVER_INTERFACE}} -j MASQUERADE
